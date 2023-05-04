@@ -6,17 +6,14 @@ function findBookById(books, id) {
   return books.find((book) => book.id === id);
 }
 
-
 function partitionBooksByBorrowedStatus(books) {
-  const loanedOut = [];
-  const returned = [];
-  books.forEach((book) => {
+  const loanedOut = books.filter((book) => {
     const [mostRecent] = book.borrows;
-    if (!mostRecent.returned) {
-      loanedOut.push(book);
-    } else {
-      returned.push(book);
-    }
+    return !mostRecent.returned;
+  });
+  const returned = books.filter((book) => {
+    const [mostRecent] = book.borrows;
+    return mostRecent.returned;
   });
   return [loanedOut, returned];
 }
@@ -36,9 +33,11 @@ function getBorrowersForBook(book, accounts) {
 
   return limitedBorrowers;
 }
+
 function getTotalBorrows(book) {
   return book.borrows.length;
 }
+
 const books = [...];
 const sortedByPopularity = books.sort((a, b) => getTotalBorrows(b) - getTotalBorrows(a));
 
