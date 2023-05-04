@@ -30,13 +30,14 @@ function getBooksPossessedByAccount(account, books, authors) {
     const borrowHistory = book.borrows;
     const latestTransaction = borrowHistory[0];
     if (latestTransaction.id === account.id && !latestTransaction.returned) {
-      const author = authors.find((author) => author.id === book.authorId);
+      const author = findAuthorById(authors, book.authorId);
       borrowedBooks.push({ ...book, author });
     }
   });
 
   return borrowedBooks;
 }
+
 
 module.exports = {
   findAccountById,
