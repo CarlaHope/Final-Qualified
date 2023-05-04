@@ -36,7 +36,11 @@ function getBorrowersForBook(book, accounts) {
 
   return limitedBorrowers;
 }
-
+function getTotalBorrows(book) {
+  return book.borrows.length;
+}
+const books = [...];
+const sortedByPopularity = books.sort((a, b) => getTotalBorrows(b) - getTotalBorrows(a));
 
 module.exports = {
   findAuthorById,
